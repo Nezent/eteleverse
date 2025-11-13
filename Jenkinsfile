@@ -41,8 +41,8 @@ pipeline {
         stage('Docker Deploy') {
             steps {
                 script {
-                    sh 'docker-compose down || true'
-                    sh 'docker-compose up -d'
+                    sh 'docker compose down api || true'
+                    sh 'docker compose up -d api'
                 }
             }
         }
@@ -90,7 +90,7 @@ pipeline {
         }
         failure {
             echo 'Pipeline failed!'
-            sh 'docker-compose down || true'
+            sh 'docker compose down api || true'
         }
         always {
             sh 'docker system prune -f || true'
