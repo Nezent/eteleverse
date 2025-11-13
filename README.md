@@ -47,7 +47,7 @@ Response:
 ## Running Tests
 
 ```bash
-go test -v ./...
+go test -v ./test/...
 ```
 
 ## Building Locally
