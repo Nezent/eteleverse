@@ -60,7 +60,7 @@ pipeline {
                     while (retryCount < maxRetries && !healthCheckPassed) {
                         try {
                             sh '''
-                                response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/api/v1/health)
+                                response=$(curl -s -o /dev/null -w "%{http_code}" http://eteleverse-api-1:8080/api/v1/health)
                                 if [ "$response" -eq 200 ]; then
                                     echo "Health check passed"
                                     exit 0
