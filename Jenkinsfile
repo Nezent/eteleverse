@@ -41,8 +41,9 @@ pipeline {
         stage('Docker Deploy') {
             steps {
                 script {
-                    sh 'docker-compose down api || true'
-                    sh 'docker-compose up -d api'
+                    sh 'docker stop eteleverse-api-1 || true'
+                    sh 'docker rm eteleverse-api-1 || true'
+                    sh "docker run -d --name eteleverse-api-1 --network eteleverse_app-network -p 8080:8080 -e PORT=8080 ${DOCKER_IMAGE}"
                 }
             }
         }
@@ -90,7 +91,8 @@ pipeline {
         }
         failure {
             echo 'Pipeline failed!'
-            sh 'docker-compose down api || true'
+            sh 'docker stop eteleverse-api-1 || true'
+            sh 'docker rm eteleverse-api-1 || true'
         }
         always {
             sh 'docker system prune -f || true'
