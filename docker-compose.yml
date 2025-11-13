@@ -30,6 +30,18 @@ services:
       - ./:/workspace
     environment:
       - DOCKER_HOST=unix:///var/run/docker.sock
+    entrypoint: /bin/bash -c
+    command:
+      - |
+        apt-get update
+        apt-get install -y wget tar docker.io curl
+        wget -q https://go.dev/dl/go1.21.5.linux-amd64.tar.gz
+        tar -C /usr/local -xzf go1.21.5.linux-amd64.tar.gz
+        ln -sf /usr/local/go/bin/go /usr/bin/go
+        ln -sf /usr/local/go/bin/gofmt /usr/bin/gofmt
+        rm go1.21.5.linux-amd64.tar.gz
+        chmod 666 /var/run/docker.sock
+        /usr/local/bin/jenkins.sh
     restart: unless-stopped
     networks:
       - app-network
